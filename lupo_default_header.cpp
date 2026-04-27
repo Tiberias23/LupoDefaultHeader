@@ -1,7 +1,7 @@
 //
 // Created by lupo on 25.11.25.
 //
-#include "lupo_default_header.hpp"
+#include <lupo_default_header.hpp>
 #include <iostream>
 #include <string>
 
