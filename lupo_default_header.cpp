@@ -35,7 +35,11 @@ void activate_ansi_escape_on_windows() {
 }
 
 void sleep_seconds(int s) {
-    Sleep(s * 1000); // Millisekunden
+    Sleep(s * 1000); // die Sleep funktion erwartet ms nicht s
+}
+
+void sleep_milliseconds(int ms) {
+    Sleep(ms);
 }
 
 void clear_screen() {
@@ -73,7 +77,15 @@ void sleep_seconds(const int s) {
     sleep(s); // Sekunden
 }
 
-void clear_screen() { std::cout << "\033[2J\033[H"; }
+void sleep_milliseconds(const unsigned int ms) {
+    sleep(ms/1000);
+}
 
-void setTerminalTitle(const std::string& title) { std::cout << "\033]0;" << title << "\007" << std::flush; }
+void clear_screen() {
+    std::cout << "\033[2J\033[H";
+}
+
+void setTerminalTitle(const std::string& title) {
+    std::cout << "\033]0;" << title << "\007" << std::flush;
+}
 #endif

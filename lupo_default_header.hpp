@@ -20,6 +20,12 @@ void activate_ansi_escape_on_windows();
 void sleep_seconds(int s);
 
 /**
+ * @brief Pausiert die Ausführung des Programms für eine angegebene Anzahl von Millisekunden (Cross platform).
+ * @param ms the time to sleep in miliseconds
+ */
+void sleep_milliseconds(int ms);
+
+/**
  * @brief Löscht den Bildschirm der Konsole (Cross platform).
  */
 void clear_screen();
@@ -31,6 +37,10 @@ void clear_screen();
  */
 void setTerminalTitle(const std::string& title);
 
+
+//----------------------------------------------------------------------------------------------------------------------
+// Hier wird eine art Error as Value klasse implementiert ist etwas lang (und etwas hässlich), aber is praktisch
+//----------------------------------------------------------------------------------------------------------------------
 
 /**
  * @brief Marker-Typ für erfolgreiche `Result`-Werte ohne Nutzdaten.
@@ -254,6 +264,10 @@ constexpr Result<O, E> Err(const E& value) { return Err<O, E>(value); }
  */
 template <typename O = OkTag, size_t S>
 constexpr Result<O, std::string> Err(const char (&value)[S]) { return Err<O, std::string>(std::string(value)); }
+
+//----------------------------------------------------------------------------------------------------------------------
+// Hier wird eine Möglichkeit implementiert, um Strings in die Binärdatei einzubetten
+//----------------------------------------------------------------------------------------------------------------------
 
 // Hide a Message ore something in the binary
 #ifdef _WIN32
