@@ -1,3 +1,4 @@
 # LupoDefaultHeader
-Just some helper functions *for me* I don't want controbutions this is just for me
-This repo is public because some github actions from me need this repo and without a token this does not work
+Do wat you want with this code
+Don't expect me to fix your problems with it
+I dont want contrubutions
