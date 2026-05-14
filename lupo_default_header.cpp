@@ -4,6 +4,8 @@
 #include <lupo_default_header.hpp>
 #include <iostream>
 #include <string>
+#include <thread>
+#include <chrono>
 
 #ifdef _WIN32
 #define NOMINMAX
@@ -34,14 +36,6 @@ void activate_ansi_escape_on_windows() {
     }
 }
 
-void sleep_seconds(int s) {
-    Sleep(s * 1000); // die Sleep funktion erwartet ms nicht s
-}
-
-void sleep_milliseconds(int ms) {
-    Sleep(ms);
-}
-
 void clear_screen() {
     HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_SCREEN_BUFFER_INFO csbi;
@@ -67,18 +61,9 @@ void setTerminalTitle(const std::string& title) {
     SetConsoleTitle(title.c_str()); // winapi
 }
 #else
-#include <unistd.h>
 
 void activate_ansi_escape_on_windows() {
     // Unter Linux oder anderen Systemen ist keine Aktion nötig
-}
-
-void sleep_seconds(const int s) {
-    sleep(s); // Sekunden
-}
-
-void sleep_milliseconds(const unsigned int ms) {
-    sleep(ms/1000);
 }
 
 void clear_screen() {
@@ -86,6 +71,19 @@ void clear_screen() {
 }
 
 void setTerminalTitle(const std::string& title) {
-    std::cout << "\033]0;" << title << "\007" << std::flush;
+    std::cout << "\033]0;" << title << "\007" << std::flush; // Flush the cout stream
 }
+
 #endif
+
+// --------------------------------------------------------------------------------------------------------------------
+// Stuff that can be implemented crosplatform
+// --------------------------------------------------------------------------------------------------------------------
+
+inline void sleep_seconds(unsigned int s) {
+    std::this_thread::sleep_for(std::chrono::seconds(s));
+}
+
+inline void sleep_milliseconds(const unsigned int ms) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(ms));
+}
