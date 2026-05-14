@@ -6,6 +6,8 @@
 #define SCHUL_UEBUNGEN_LUPO_DEFAULT_HEADER_H
 #include <string>
 #include <variant>
+#include <chrono>
+#include <thread>
 
 /**
  * @brief Aktiviert die Verwendung von ANSI-Farbcodes in der Windows-Konsole.
@@ -14,16 +16,21 @@
 void activate_ansi_escape_on_windows();
 
 /**
- * @brief Pausiert die Ausführung des Programms für eine angegebene Anzahl von Sekunden (Cross platform).
- * @param s Anzahl der Sekunden, für die das Programm pausiert werden soll.
+ * @brief Sleeps the program for a given amount of seconds
+ * @param s the amount of seconds to sleep
  */
-void sleep_seconds(unsigned int s);
+inline void sleep_seconds(const unsigned int s) {
+    std::this_thread::sleep_for(std::chrono::seconds(s));
+}
 
 /**
- * @brief Pausiert die Ausführung des Programms für eine angegebene Anzahl von Millisekunden (Cross platform).
- * @param ms the time to sleep in miliseconds
+ * @brief Sleeps the program for a given amount of milliseconds
+ * @param ms the amount of milliseconds
  */
-void sleep_milliseconds(unsigned int ms);
+inline void sleep_milliseconds(const unsigned int ms) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(ms));
+}
+
 
 /**
  * @brief Löscht den Bildschirm der Konsole (Cross platform).

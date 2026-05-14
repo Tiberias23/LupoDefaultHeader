@@ -75,15 +75,3 @@ void setTerminalTitle(const std::string& title) {
 }
 
 #endif
-
-// --------------------------------------------------------------------------------------------------------------------
-// Stuff that can be implemented crosplatform
-// --------------------------------------------------------------------------------------------------------------------
-
-inline void sleep_seconds(const unsigned int s) {
-    std::this_thread::sleep_for(std::chrono::seconds(s));
-}
-
-inline void sleep_milliseconds(const unsigned int ms) {
-    std::this_thread::sleep_for(std::chrono::milliseconds(ms));
-}
