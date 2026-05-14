@@ -17,13 +17,13 @@ void activate_ansi_escape_on_windows();
  * @brief Pausiert die Ausführung des Programms für eine angegebene Anzahl von Sekunden (Cross platform).
  * @param s Anzahl der Sekunden, für die das Programm pausiert werden soll.
  */
-void sleep_seconds(int s);
+void sleep_seconds(unsigned int s);
 
 /**
  * @brief Pausiert die Ausführung des Programms für eine angegebene Anzahl von Millisekunden (Cross platform).
  * @param ms the time to sleep in miliseconds
  */
-void sleep_milliseconds(int ms);
+void sleep_milliseconds(unsigned int ms);
 
 /**
  * @brief Löscht den Bildschirm der Konsole (Cross platform).
