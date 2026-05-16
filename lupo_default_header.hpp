@@ -44,6 +44,7 @@ void clear_screen();
  */
 void setTerminalTitle(const std::string& title);
 
+void printTable( const std::vector<std::vector<std::string>>& data, const bool firstRowIsHeader = true, const bool rowSeparators   = false);
 
 //----------------------------------------------------------------------------------------------------------------------
 // Hier wird eine art Error as Value klasse implementiert ist etwas lang (und etwas hässlich), aber is praktisch
