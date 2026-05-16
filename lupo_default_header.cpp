@@ -83,8 +83,8 @@ void setTerminalTitle(const std::string& title) {
 
 void printTable(
     const std::vector<std::vector<std::string>>& data,
-    const bool firstRowIsHeader = true,
-    const bool rowSeparators   = false
+    const bool firstRowIsHeader,
+    const bool rowSeparators
 ) {
 
 #ifdef _WIN32
