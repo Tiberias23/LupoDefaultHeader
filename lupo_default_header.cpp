@@ -76,11 +76,6 @@ void setTerminalTitle(const std::string& title) {
 
 #endif
 
-#ifdef _WIN32
-#define NOMINMAX
-#include <windows.h>
-#endif
-
 void printTable(
     const std::vector<std::vector<std::string>>& data,
     const bool firstRowIsHeader,
