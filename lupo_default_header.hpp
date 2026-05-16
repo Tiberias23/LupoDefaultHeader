@@ -8,6 +8,7 @@
 #include <variant>
 #include <chrono>
 #include <thread>
+#include <vector>
 
 /**
  * @brief Aktiviert die Verwendung von ANSI-Farbcodes in der Windows-Konsole.
@@ -44,7 +45,13 @@ void clear_screen();
  */
 void setTerminalTitle(const std::string& title);
 
-void printTable( const std::vector<std::vector<std::string>>& data, const bool firstRowIsHeader = true, const bool rowSeparators   = false);
+/**
+ * @brief Prints a table to the console, the table is given as a two-dimensional vector of strings
+ * @param data the data in a two-dimensional vector
+ * @param firstRowIsHeader if true, the first row will be printed as a header and separated from the rest of the table with a horizontal line
+ * @param rowSeparators if true, every row will be separated with a horizontal line, this ignores the firstRowIsHeader, because then the header will be separated from the rest of the table with a horizontal line anyway
+ */
+void printTable( const std::vector<std::vector<std::string>>& data, bool firstRowIsHeader = true, bool rowSeparators = false);
 
 //----------------------------------------------------------------------------------------------------------------------
 // Hier wird eine art Error as Value klasse implementiert ist etwas lang (und etwas hässlich), aber is praktisch

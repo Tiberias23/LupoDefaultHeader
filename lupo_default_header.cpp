@@ -4,8 +4,7 @@
 #include <lupo_default_header.hpp>
 #include <iostream>
 #include <string>
-#include <thread>
-#include <chrono>
+#include <vector>
 
 #ifdef _WIN32
 #define NOMINMAX
@@ -82,6 +81,7 @@ void printTable(
     const bool rowSeparators
 ) {
 
+    // constructs a struct that sets the console encoding to UTF-8 and sets it back at decunstruction
 #ifdef _WIN32
     struct CPGuard {
         UINT prev;
