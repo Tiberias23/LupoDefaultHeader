@@ -75,3 +75,84 @@ void setTerminalTitle(const std::string& title) {
 }
 
 #endif
+
+#ifdef _WIN32
+#define NOMINMAX
+#include <windows.h>
+#endif
+
+void printTable(
+    const std::vector<std::vector<std::string>>& data,
+    const bool firstRowIsHeader = true,
+    const bool rowSeparators   = false
+) {
+
+#ifdef _WIN32
+    struct CPGuard {
+        UINT prev;
+        CPGuard() {
+	        prev = GetConsoleOutputCP(); 
+        	SetConsoleOutputCP(CP_UTF8);
+        }
+        ~CPGuard() {
+	        SetConsoleOutputCP(prev);
+        }
+    } cpGuard;
+#endif
+
+    if (data.empty()) return;
+
+    auto utf8Len = [&](const std::string& s) -> size_t {
+        size_t len = 0;
+        for (unsigned char c : s)
+            if ((c & 0xC0) != 0x80) ++len;
+        return len;
+    };
+
+    // Anzahl Spalten (Maximum über alle Zeilen)
+    size_t numCols = 0;
+    for (const auto& row : data)
+        numCols = std::max(numCols, row.size());
+
+    // Spaltenbreiten berechnen
+    std::vector<size_t> colWidths(numCols, 0);
+    for (const auto& row : data)
+        for (size_t i = 0; i < row.size(); ++i)
+            colWidths[i] = std::max(colWidths[i], utf8Len(row[i]));
+
+    // Horizontale Linie zeichnen
+    auto hLine = [&](const std::string& l, const std::string& m, const std::string& r) {
+        std::cout << l;
+        for (size_t i = 0; i < numCols; ++i) {
+            for (size_t j = 0; j < colWidths[i] + 2; ++j)
+                std::cout << "─";
+            std::cout << (i < numCols - 1 ? m : r);
+        }
+        std::cout << "\n";
+    };
+
+    // Zeile ausgeben
+    auto printRow = [&](const std::vector<std::string>& row) -> void {
+        std::cout << "│";
+        for (size_t i = 0; i < numCols; ++i) {
+            const std::string& cell = (i < row.size()) ? row[i] : "";
+            std::cout << " " << cell << std::string(colWidths[i] - utf8Len(cell), ' ') << " │";
+        }
+        std::cout << "\n";
+    };
+
+    hLine("┌", "┬", "┐");
+
+    for (size_t r = 0; r < data.size(); ++r) {
+        printRow(data[r]);
+        std::flush(std::cout);
+
+        const bool isHeader = (r == 0 && firstRowIsHeader);
+        const bool isLast   = (r == data.size() - 1);
+
+        if (isLast)
+            hLine("└", "┴", "┘");
+        else if (isHeader || rowSeparators)
+            hLine("├", "┼", "┤");
+    }
+}
